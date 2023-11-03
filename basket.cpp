@@ -47,7 +47,25 @@ int Basket::subBlueBall() {
 }
 
 int Basket::subRandBall() {
-    int ball = rand() % 2;
+    int choice = rand() % (redBalls + blueBalls);
+    int ball = 0;
+    if (redBalls > blueBalls) {
+        if (choice > blueBalls)
+            ball = 0;
+        else
+            ball = 1;
+    }
+    else if (redBalls == blueBalls){
+        ball = rand() % 2;
+    }
+    else {
+        if (choice > redBalls)
+            ball = 1;
+        else
+            ball = 0;
+    }
+
+
     if (ball == 0) {
         if (redBalls > 0){
             subRedBall();
@@ -71,8 +89,8 @@ int Basket::subRandBall() {
             if (redBalls > 0){
                 subRedBall();
                 return 0;
+            }
         }
-    }
     }
     return -1;
 }
