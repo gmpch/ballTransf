@@ -8,8 +8,8 @@
 
 Basket::Basket()
 {
-    redBalls = rand() % 100 + 10;
-    blueBalls = rand() % 100 + 10;
+    redBalls = rand() % 50 + 10;
+    blueBalls = rand() % 50 + 10;
     lastOperation = false;
 }
 
@@ -51,7 +51,9 @@ int Basket::subBlueBall() {
 }
 
 int Basket::subRandBall() {
-    int choice = rand() % (redBalls + blueBalls);
+    if (getBallsSum() == 0)
+        return -1;
+    int choice = rand() % getBallsSum();
     int ball = 0;
     if (redBalls > blueBalls) {
         if (choice > blueBalls)
@@ -101,12 +103,16 @@ int Basket::subRandBall() {
 
 float Basket::getProbRed() {
     int sum = blueBalls + redBalls;
+    if (sum == 0)
+        return 0;
     float rez = static_cast<float>(redBalls) / sum * 100;
     return rez;
 }
 
 float Basket::getProbBlue() {
     int sum = blueBalls + redBalls;
+    if (sum == 0)
+        return 0;
     float rez = static_cast<float>(blueBalls) / sum * 100;
     return rez;
 }
@@ -126,6 +132,8 @@ float Basket::getProbTwoBlue() {
 float Basket::getProbOneRedOneBlue() {
     float prob1 = redBalls * blueBalls;
     float prob2 = (redBalls + blueBalls) * (redBalls + blueBalls - 1);
+    if (prob1 == 0)
+        return 0;
     float rez = prob1 / prob2;
     return rez;
 }
