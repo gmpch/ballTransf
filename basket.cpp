@@ -17,6 +17,10 @@ int Basket::getRedBalls() {
     return redBalls;
 }
 
+int Basket::getBallsSum() {
+    return redBalls + blueBalls;
+}
+
 int Basket::getBlueBalls() {
     return blueBalls;
 }

@@ -8,6 +8,7 @@ public:
     Basket();
     int getRedBalls();
     int getBlueBalls();
+    int getBallsSum();
     bool getLastOperation();
     int addRedBall();
     int addBlueBall();
