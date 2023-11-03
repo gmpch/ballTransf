@@ -37,7 +37,7 @@ void MainWindow::updateLabels() {
 
     ui->backets_prob2RedLabel->setText("Вероятность достать 2 синих шара: " + QString::number( (basket1.getProbTwoBlue() + basket2.getProbTwoBlue()) / 2 * 100) + "%");
     ui->backets_prob2BlueLabel->setText("Вероятность достать 2 красных шара: " + QString::number( (basket1.getProbTwoRed() + basket2.getProbTwoRed()) / 2 * 100) + "%");
-    ui->backets_prob1Blue1RedLabel->setText("Вероятность достать 1 синий и 1 красный: "+ QString::number( (basket1.getProbOneRedOneBlue() + basket2.getProbOneRedOneBlue()) / 2 * 100) + "%");
+    ui->backets_prob1Blue1RedLabel->setText("Вероятность достать 1 синий и 1 красный: "+ QString::number( (basket1.getProbOneRedOneBlue() + basket2.getProbOneRedOneBlue()) * 100) + "%");
 
 }
 
@@ -74,10 +74,15 @@ void MainWindow::onBucketsButtonClicked()
     int basketNumber = rand() % 2;
     if (basketNumber == 0) {
         basket1.subRandBall();
-        basket1.subRandBall();
     }
     else {
         basket2.subRandBall();
+    }
+    basketNumber = rand() % 2;
+    if (basketNumber == 0) {
+        basket1.subRandBall();
+    }
+    else {
         basket2.subRandBall();
     }
     updateLabels();
