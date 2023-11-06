@@ -1,9 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "basket.h"
-
-Basket basket1;
-Basket basket2;
+#include "probabilityCalc.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,19 +23,20 @@ void MainWindow::updateLabels() {
     ui->backet1_RedBallsLabel->setText("Красных шаров: " +  QString::number(basket1.getRedBalls()));
     ui->backet1_BlueBallsLabel->setText("Cиних шаров: " + QString::number(basket1.getBlueBalls()));
     ui->backet1_ballsLabel->setText("Всего шаров: " + QString::number(basket1.getRedBalls() + basket1.getBlueBalls()));
-    ui->backet1_probRedLabel->setText("Вероятность достать красный: " + QString::number(basket1.getProbRed()) + "%");
-    ui->backet1_probBlueLabel->setText("Вероятность достать синий: " + QString::number(basket1.getProbBlue()) + "%");
+    ui->backet1_probRedLabel->setText("Вероятность достать красный: " + QString::number(calc.getProbRed(basket1)) + "%");
+    ui->backet1_probBlueLabel->setText("Вероятность достать синий: " + QString::number(calc.getProbBlue(basket1)) + "%");
 
 
     ui->backet2_RedBallsLabel->setText("Красных шаров: " +  QString::number(basket2.getRedBalls()));
     ui->backet2_BlueBallsLabel->setText("Cиних шаров: " +QString::number(basket2.getBlueBalls()));
     ui->backet2_ballsLabel->setText("Всего шаров: " + QString::number(basket2.getRedBalls() + basket2.getBlueBalls()));
-    ui->backet2_probRedLabel->setText("Вероятность достать красный: " + QString::number(basket2.getProbRed()) + "%");
-    ui->backet2_probBlueLabel->setText("Вероятность достать синий: " + QString::number(basket2.getProbBlue()) + "%");
+    ui->backet2_probRedLabel->setText("Вероятность достать красный: " + QString::number(calc.getProbRed(basket2)) + "%");
+    ui->backet2_probBlueLabel->setText("Вероятность достать синий: " + QString::number(calc.getProbBlue(basket2)) + "%");
 
-    ui->backets_prob2RedLabel->setText("Вероятность достать 2 синих шара: " + QString::number( (basket1.getProbTwoBlue() + basket2.getProbTwoBlue()) / 2 * 100) + "%");
-    ui->backets_prob2BlueLabel->setText("Вероятность достать 2 красных шара: " + QString::number( (basket1.getProbTwoRed() + basket2.getProbTwoRed()) / 2 * 100) + "%");
-    ui->backets_prob1Blue1RedLabel->setText("Вероятность достать 1 синий и 1 красный: "+ QString::number( (basket1.getProbOneRedOneBlue() + basket2.getProbOneRedOneBlue()) * 100) + "%");
+
+    ui->backets_prob2RedLabel->setText("Вероятность достать 2 синих шара: " + QString::number(calc.getProbTwoBlue(basket1, basket2)) + "%");
+    ui->backets_prob2BlueLabel->setText("Вероятность достать 2 красных шара: " + QString::number(calc.getProbTwoRed(basket1, basket2)) + "%");
+    ui->backets_prob1Blue1RedLabel->setText("Вероятность достать 1 синий и 1 красный: "+ QString::number(calc.getProbOneBlueOneRed(basket1, basket2)) + "%");
 
 }
 
@@ -71,22 +70,33 @@ void MainWindow::onBucket2ButtonClicked()
 
 void MainWindow::onBucketsButtonClicked()
 {
-    int basketNumber = rand() % 2;
+    int basketNumber = rand() % 2;    
     if (basketNumber == 0) {
-        basket1.subRandBall();
+        subIfExists(basket1, basket2);
     }
     else {
-        basket2.subRandBall();
+        subIfExists(basket2, basket1);
     }
     basketNumber = rand() % 2;
     if (basketNumber == 0) {
-        basket1.subRandBall();
+        subIfExists(basket1, basket2);
     }
     else {
-        basket2.subRandBall();
+        subIfExists(basket2, basket1);
     }
     updateLabels();
 }
+
+void MainWindow::subIfExists(Basket& chosenBasket, Basket& secondBasket) {
+    if (chosenBasket.getBallsSum() == 0) {
+        if (secondBasket.getBallsSum() != 0)
+            secondBasket.subRandBall();
+    }
+    else {
+        chosenBasket.subRandBall();
+    }
+}
+
 
 MainWindow::~MainWindow()
 {

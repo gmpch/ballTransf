@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "basket.h"
+#include "probabilityCalc.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +19,10 @@ public:
     void onBucket1ButtonClicked();
     void onBucket2ButtonClicked();
     void onBucketsButtonClicked();
+    void subIfExists(Basket& chosenBasket, Basket& secondBasket);
+    Basket basket1;
+    Basket basket2;
+    ProbabilityCalc calc;
     ~MainWindow();
 
 private:

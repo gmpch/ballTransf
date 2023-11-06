@@ -14,11 +14,6 @@ public:
     int addBlueBall();
     int subRedBall();
     int subBlueBall();
-    float getProbRed();
-    float getProbBlue();
-    float getProbTwoRed();
-    float getProbTwoBlue();
-    float getProbOneRedOneBlue();
     int subRandBall();
 
 

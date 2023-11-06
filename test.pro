@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     basket.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    probabilityCalc.cpp
 
 HEADERS += \
     basket.h \
-    mainwindow.h
+    mainwindow.h \
+    probabilityCalc.h
 
 FORMS += \
     mainwindow.ui

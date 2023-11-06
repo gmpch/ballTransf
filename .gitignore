@@ -18,6 +18,7 @@ build*
 *.qm
 .#*
 *.*#
+test.pro.user
 core
 !core/
 tags
