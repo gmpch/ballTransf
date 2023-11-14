@@ -7,8 +7,8 @@
 
 Basket::Basket()
 {
-    redBalls = rand() % 10 + 10;
-    blueBalls = rand() % 10 + 10;
+    redBalls = 1;
+    blueBalls = 1;
     lastOperation = false;
 }
 

@@ -30,9 +30,15 @@ float ProbabilityCalc::getProbTwoBlue(Basket& basket) {
     return firstBlue * secondBlue;
 }
 
-float ProbabilityCalc::getProbTwoDif(Basket& basket) {
+float ProbabilityCalc::getProbTwoDifRed(Basket& basket) {
     float firstBall = sDiv(basket.getRedBalls(),basket.getBallsSum());
     float secondBall = sDiv((basket.getBlueBalls()),basket.getBallsSum() - 1);
+    return firstBall * secondBall;
+}
+
+float ProbabilityCalc::getProbTwoDifBlue(Basket& basket) {
+    float firstBall = sDiv(basket.getBlueBalls(),basket.getBallsSum());
+    float secondBall = sDiv((basket.getRedBalls()),basket.getBallsSum() - 1);
     return firstBall * secondBall;
 }
 
@@ -67,10 +73,14 @@ float ProbabilityCalc::getProbOneBlueOneRed(Basket& basket1, Basket& basket2) {
         return getProbOneBlueOneRedSingle(basket2);
     else if (basket2.getBallsSum() == 0)
         return getProbOneBlueOneRedSingle(basket1);
-    float rezMixed = 0.25 * getProbTwoDif(basket1) + // вероятность достать сначала красный из первой, потом синий из первой корзины
+    float rezMixed = 0.25 * getProbTwoDifRed(basket1) + // вероятность достать сначала красный из первой, потом синий из первой корзины
                      0.25 * getProbRed(basket1) * 0.01 * getProbBlue(basket2) * 0.01 + // вероятность достать сначала красный из первой, потом с из второй корзины
-                     0.25 * getProbTwoDif(basket2) + // вероятность достать сначала красный из второй, потом с из второй корзины
-                     0.25 * getProbRed(basket2) * 0.01 * getProbBlue(basket1) * 0.01; // вероятность достать сначала красный из второй, потом с из первой корзины
+                     0.25 * getProbTwoDifRed(basket2) + // вероятность достать сначала красный из второй, потом с из второй корзины
+                     0.25 * getProbRed(basket2) * 0.01 * getProbBlue(basket1) * 0.01 + // вероятность достать сначала красный из второй, потом с из первой корзины
+                     0.25 * getProbTwoDifBlue(basket1) + // вероятность достать сначала синий из первой, потом красный из первой корзины
+                     0.25 * getProbBlue(basket1) * 0.01 * getProbRed(basket2) * 0.01 + // вероятность достать сначала синий из первой, потом к из второй корзины
+                     0.25 * getProbTwoDifBlue(basket2) + // вероятность достать сначала синий из второй, потом к из второй корзины
+                     0.25 * getProbBlue(basket2) * 0.01 * getProbRed(basket1) * 0.01; // вероятность достать сначала синий из второй, потом к из первой корзины
     return rezMixed * 100;
 }
 
@@ -89,7 +99,8 @@ float ProbabilityCalc::getProbTwoBlueSingle(Basket& basket){
 float ProbabilityCalc::getProbOneBlueOneRedSingle(Basket& basket) {
     if (basket.getBallsSum() <= 1)
         return 0;
-    float rez = 1.0 * basket.getRedBalls()/basket.getBallsSum() * basket.getBlueBalls() / (1.0 * basket.getBallsSum() - 1);
+    float rez = 1.0 * basket.getRedBalls()/basket.getBallsSum() * basket.getBlueBalls() / (1.0 * basket.getBallsSum() - 1) +
+                1.0 * basket.getBlueBalls()/basket.getBallsSum() * basket.getRedBalls() / (1.0 * basket.getBallsSum() - 1);
     return rez * 100;
 }
 

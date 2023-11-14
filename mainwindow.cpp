@@ -33,10 +33,15 @@ void MainWindow::updateLabels() {
     ui->backet2_probRedLabel->setText("Вероятность достать красный: " + QString::number(calc.getProbRed(basket2)) + "%");
     ui->backet2_probBlueLabel->setText("Вероятность достать синий: " + QString::number(calc.getProbBlue(basket2)) + "%");
 
+    float twoRed = calc.getProbTwoRed(basket1, basket2);
+    float twoBlue = calc.getProbTwoBlue(basket1, basket2);
+    float twoDif = calc.getProbOneBlueOneRed(basket1, basket2);
 
-    ui->backets_prob2RedLabel->setText("Вероятность достать 2 синих шара: " + QString::number(calc.getProbTwoBlue(basket1, basket2)) + "%");
-    ui->backets_prob2BlueLabel->setText("Вероятность достать 2 красных шара: " + QString::number(calc.getProbTwoRed(basket1, basket2)) + "%");
-    ui->backets_prob1Blue1RedLabel->setText("Вероятность достать 1 синий и 1 красный: "+ QString::number(calc.getProbOneBlueOneRed(basket1, basket2)) + "%");
+    ui->backets_prob2RedLabel->setText("Вероятность достать 2 синих шара: " + QString::number(twoRed) + "%");
+    ui->backets_prob2BlueLabel->setText("Вероятность достать 2 красных шара: " + QString::number(twoBlue) + "%");
+    ui->backets_prob1Blue1RedLabel->setText("Вероятность достать 1 синий и 1 красный: "+ QString::number(twoDif) + "%");
+
+    ui->probabilitySum_Label->setText("Сумма вероятностей: " + QString::number(twoRed+twoBlue+twoDif) + "%");
 
 }
 

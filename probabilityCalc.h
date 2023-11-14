@@ -14,7 +14,8 @@ class ProbabilityCalc{
         float getProbTwoBlueSingle(Basket& basket);
         float getProbTwoRed(Basket& basket);
         float getProbTwoBlue(Basket& basket);
-        float getProbTwoDif(Basket& basket1);
+        float getProbTwoDifRed(Basket& basket1);
+        float getProbTwoDifBlue(Basket& basket1);
         float getProbOneBlueOneRedSingle(Basket& basket);
         float sDiv(int number1, int number2);
 };
